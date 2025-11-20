@@ -11,6 +11,7 @@ helm repo update
 helm search repo argocd
 
 helm show values argo/argo-cd --version 3.35.4  > argocd-defaults.yaml
+Run terraform commands here and then run the following commands 
 helm status argocd -n argocd
 helm list --pending -A
 
@@ -19,7 +20,7 @@ kubectl get pods -n argocd
 kubectl get secret -n argocd
 
 kubectl get secrets argocd-initial-admin-secret -o yaml -n argocd
-echo "TGpUVHRkcC0wMktVZ0dVcA==" | base64 -d | LjTTtdp-02KUgGUp
+echo "NGF4Vms5Yk5aMmZYb2lJNA==" | base64 -d | 4axVk9bNZ2fXoiI4
 kubectl port-forward svc/argocd-server -n argocd 8080:80
 
 username: admin
@@ -36,3 +37,24 @@ Click on sync it will work automatically from now on
 
 And to automate this process of tagging the image to the infra repo is done through a small example of upgrade.sh
 And make it executable 
+
+When using 3-example we are not gonna use https and specify the private repo use ssh instead which a secure way of connecting 
+So first we need to create an ssh key using this command:
+ssh-keygen -t ed25519 -f ~/.ssh/argocd_ed25519
+or ssh-keygen -t rsa -b 4096 -f ~/.ssh/argocd_ed25519
+
+Then upload the public key to github repo under setting and deploy key
+And next is create a seceret in kubernetes using file in 3-example
+Then run 
+kubectl apply -f 3-example/git-repo-secret.yaml
+Then apply application:
+kubectl apply -f 3-example/application.yaml
+
+But still it wont be able to pull the images as it is in private repo:
+So create a read only token in dockerhub and store it here 
+And then use it in the kubectl create secret command 
+
+kubectl create secret docker-registry dockerconfigjson -n foo \
+    --docker-server="https://index.docker.io/v1/" \
+    --docker-username=howaboutwepullsomeimages \
+    --docker-password=<PAT> 
