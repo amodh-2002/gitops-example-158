@@ -20,7 +20,7 @@ kubectl get pods -n argocd
 kubectl get secret -n argocd
 
 kubectl get secrets argocd-initial-admin-secret -o yaml -n argocd
-echo "NGF4Vms5Yk5aMmZYb2lJNA==" | base64 -d | 4axVk9bNZ2fXoiI4
+echo "bjFuV1VBNEtMcUwySDJTVQ==" | base64 -d | n1nWUA4KLqL2H2SU
 kubectl port-forward svc/argocd-server -n argocd 8080:80
 
 username: admin
@@ -62,3 +62,13 @@ kubectl create secret docker-registry dockerconfigjson -n foo \
     --docker-server="https://index.docker.io/v1/" \
     --docker-username=howaboutwepullsomeimages \
     --docker-password=<PAT> 
+
+
+Next running helm chart command to deploy the application in argocd 
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm search repo metrics-server
+
+next run this: kubectl apply -f 4-example/application.yaml
+And then to check if it working run these commands:
+kubectl top pods -n kube-system -> You will see a different output
+kubectl top nodes -> Same here 
