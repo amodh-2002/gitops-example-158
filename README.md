@@ -29,7 +29,11 @@ password from above
 Next is setting up public repo and public image 
 
 Now in 1-example is where we deploy using argocd and give reference to application
-Once you have the application.yaml file run the kubectl command
+Once you have the application.yaml file run the kubectl command'
+Before applying we need to have the docker images and login setup:
+docker login -u <username> -p <password> or docker login -u <username> and enter 
+And next is pulling the necessary image and tagging for testing purpose for that go through the public or private repo
+
 kubectl apply -f 1-example/application.yaml
 
 You need to apply maunally in argocd application 
